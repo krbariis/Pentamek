@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pentamek</title>
+	<link rel="shortcut icon" href="/img/icon-mini.png">
+
+	<!--TW-Elements-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+
+	<!--SwiperJS-->
+	<link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
+
+	<!--AOS-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<!--Tailwind-->
+	<script src="https://cdn.tailwindcss.com"></script>
+	
+	<!--res-dropdown-->
+	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+	
+	<script>
+		tailwind.config = {
+		  theme: {
+			
+			
+			fontFamily: {
+      			body: ['Open Sans', 'sans-serif'],
+      			header: ['Cairo', 'sans-serif'],
+    },
+			extend: {
+			  colors: {
+				darkBlue: 'hsl(240, 23%, 11%)',
+				midBlue: 'hsl(204, 100%, 36%)',
+				lightBlue: 'hsl(195, 90%, 61%)',
+				whiteNot: 'hsl(0, 0%, 95%)',
+			  },
+			  spacing: {
+				'xs': '35rem',
+			},
+			}
+		  }
+		}
+	  </script>
+
+	<style type="text/tailwindcss">
+		@layer utilities {
+		
+		.cookiestyle{
+			padding: 10px;
+			text-align: center;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			z-index: 30;
+		}
+
+		.popup-overlay {
+		display: none;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background-color: rgba(0, 0, 0, 0.7);
+		z-index: 9999;
+		}
+
+		.popup {
+		max-height: 85%;
+		overflow-y: auto;
+		box-shadow: 0px 0px 10px #000;
+		padding: 20px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 80%;
+		}
+
+		.glass{
+		background: linear-gradient(121.37deg, rgba(175, 173, 173, 0.2) 4.47%, rgba(0, 0, 0, 0.1) 93.87%);
+		backdrop-filter: blur(5px);
+		border-top: .15rem solid rgba(255, 255, 255, 0.2);
+		border-left: .15rem solid rgba(255, 255, 255, 0.2);
+		border-right: .15rem solid rgba(255, 255, 255, 0.2);
+		border-bottom: .15rem solid rgba(255, 255, 255, 0.2);   
+		}
+
+		.nav-glass{
+		background: linear-gradient(121.37deg, rgba(255, 255, 255, 0.3) 4.47%, rgba(255, 255, 255, 0.2) 93.87%);
+		backdrop-filter: blur(50px);
+		border-bottom: .15rem solid rgba(255, 255, 255, 0.2);
+		}
+
+		.bg-blue{
+			background: linear-gradient(121.37deg, #44C8F5 4.47%, rgba(0, 110, 183, 0.8) 93.87%);
+			backdrop-filter: blur(3px);
+		}
+		
+
+		@layer base{
+			h1, h2{
+				color: #F1F1F1;
+				font-family: 'Cairo', sans-serif;
+			}
+
+			a, p, span, button{
+				color: #F1F1F1;
+				font-family: 'Open Sans', sans-serif;
+			}
+
+			
+		}
+	}
+	</style>
+
+	<!--Custom Font Family-->
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!--Fontawesome ICONS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+	
+</head>
+<body class="bg-darkBlue">
+
+	<!--Cokie-->
+	<div id="cookie-banner" class="cookiestyle glass">
+		<p>We use cookies to improve your browsing experience and to personalize content and ads. By continuing to use this website, you consent to our use of cookies. For more information, please see our <button id="openPopup" class="hover:text-lightBlue text-blue-500"> Privacy Policy </button></p>
+		<button id="cookie-banner-accept" class="glass py-1 px-3 mt-2 rounded-md hover:text-lightBlue">Accept</button>
+	</div>
+	<!--Privacy Policy-->
+
+	<div class="popup-overlay z-40">
+		<div class="popup glass rounded-lg">
+		  <div class="w-full flex pb-4"><img src="/img/logo-m.png" alt="" class="w-[12rem] mx-auto"></div>
+		 	<p>Your safety is important to us. For this reason, your personal data that you will share with us is sensitively protected.
+			Pentamek Defense Industry Consulting Trade Inc. As a data controller, with this privacy and personal data protection policy, which personal data will be processed for what purpose, with whom and why the processed data can be shared, our data processing method and our legal reasons; We aim to enlighten you about your rights regarding your processed data.
+			Your Collected Personal Data, Collection Method and Legal Reason
+			Your IP address and user agent information are only used for analytics and cookies etc. will be processed by means of technologies, automatic or non-automatic methods and sometimes obtained from third parties such as analytical providers, advertising networks, search information providers, technology providers, recorded, stored and updated, within the framework and duration of the service and contractual relationship between us, on the basis of the legitimate interest processing condition. .
+			Purpose of Processing Your Personal Data
+			Your personal data that you share with us only by analyzing; to fulfill the requirements of the services we offer in the best way, to ensure that these services can be accessed and utilized by you at the maximum level, to develop our services in line with your needs and to bring you together with broader service providers within legal frameworks, It will be processed and updated in accordance with its purpose and proportionately during the contract and service period, in order to fulfill the
+			
+			To Whom and For What Purposes the Personal Data Collected Can Be Transferred
+			Your personal data you share with us; It can be transferred to third parties, institutions and organizations at home and abroad, with which we receive and/or provide services to carry out our activities, with whom we have contractual relations, with whom we cooperate, and to judicial and administrative authorities upon request, provided that necessary technical and administrative measures are taken.
+			Your Rights as the Person whose Personal Data is Processed
+			Pursuant to article 11 of the KVKK, everyone can use the following rights by applying to the data controller:
+			a. Learning whether personal data is processed or not,
+			b. If personal data has been processed, requesting information about it,
+			c. Learning the purpose of processing personal data and whether they are used in accordance with its purpose,
+			D. Knowing the third parties to whom personal data is transferred at home or abroad,
+			to. Requesting correction of personal data in case of incomplete or incorrect processing,
+			f. Requesting the deletion or destruction of personal data,
+			g. Requesting notification of the transactions made pursuant to subparagraphs (e) and (f) to third parties to whom personal data has been transferred,
+			h. Objecting to the emergence of a result against the person himself by analyzing the processed data exclusively through automated systems,
+			I. It has the right to demand the compensation of the damage in case of loss due to the unlawful processing of personal data.
+			You can contact us via info@pentamek.com to exercise your above-mentioned rights.
+			Communication
+			</p>
+		  <button id="closePopup" class="w-full items-center mt-4 glass p-2 rounded hover:text-lightBlue">Close</button>
+		</div>
+	  </div>
+
+
+	 <!-- Navbar -->
+	 <div class="h-[4rem] z-40 absolute left-0 top-0 w-full nav-glass">
+		<div class="antialiased h-[4rem] pt-3">
+		<div class="w-full text-white">
+		  <div x-data="{ open: false }" class="flex flex-col max-w-screen-2xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
+			<div class="flex flex-row items-center justify-between">
+			  <a href="english.html" class="absolute w-36 top-0 text-lg font-semibold tracking-widest  uppercase rounded-lg  focus:outline-none focus:shadow-outline"><img src="img/logo.jpg" alt="" class="w-full rounded-b-2xl" /></a>
+			  <button class="ml-auto rounded-lg md:hidden focus:outline-none focus:shadow-outline mt-2" @click="open = !open">
+				<svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+				  <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+				  <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+				</svg>
+			  </button>
+			</div>
+
+			<!--ICON-->
+			<a
+			href="english.html"
+			class="hidden w-[65px] pt-2  lg:block absolute top-5 left-[48.5%]"
+			><img src="/img/icon.png" alt="">
+			</a> 
+
+			<!--NAV-MENU-->
+			<nav :class="{'flex': open, 'hidden': !open}" class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row md:mt-1 mt-10 md:bg-opacity-0 md:border-none bg-darkBlue border border-white/40 rounded-lg">
+				<a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-darkBlue  hover:bg-gray-200  md:hover:text-lightBlue ease-in duration-200 md:px-0 md:py-0 md:mt-0 md:hover:bg-opacity-0 md:mt-[3px]" href="english.html">Home</a>
+	  
+			  <div @click.away="open = false" class="relative" x-data="{ open: false }">
+				  <button @click="open = !open" class="group flex flex-row text-white items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg  md:w-auto md:inline md:mt-0 md:ml-4 hover:text-darkBlue hover:bg-gray-200 md:hover:text-lightBlue ease-in duration-200 md:px-0 md:py-0 md:mt-0 md:hover:bg-opacity-0">
+					<span class="md:hover:text-lightBlue group-hover:text-darkBlue md:group-hover:text-lightBlue w-full h-full">Products</span>
+					<svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+				  </button>
+				  <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-10 right-0 w-full md:max-w-[28rem] md:w-screen md:mt-6 mt-0 origin-top-right">
+					<div class="px-2 pt-2 pb-4 bg-darkBlue border border-white/40 rounded-md shadow-lg">
+					  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+						
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="5g-iletisim-en.html">
+						  
+						  <div class="ml-3 w-full">
+						   
+							<p class="text-sm group-hover:text-darkBlue">5G and Fiber Technology</p>
+						  </div>
+						</a>
+		
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="depolama-en.html">
+						  
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Storage Units</p>
+						  </div>
+						</a>
+		
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="ekrancozumleri-en.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Display Solutions</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="elektromekanik-en.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Electromechanic</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="gomulu-pc-en.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Embedded Computer Solutions</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="konnektor-en.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Connectors</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="pcb-en.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">PCB</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="rf-micro-en.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">RF & Microwave</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="sensors-en.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Sensors</p>
+						  </div>
+						</a>
+
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="guc-en.html">
+							<div class="ml-3 w-full">
+							  <p class="text-sm group-hover:text-darkBlue ">Power Products and Components</p>
+							</div>
+						  </a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="design-en.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue ">Design and Engineering</p>
+						  </div>
+						</a>
+						
+					  </div>
+					</div>
+				  </div>
+			  </div>  
+			  
+			  <div @click.away="open = false" class="relative" x-data="{ open: false }">
+				  <button @click="open = !open" class="group flex flex-row text-white items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg  md:w-auto md:inline md:mt-0 md:ml-4 hover:text-darkBlue hover:bg-gray-200 md:hover:text-lightBlue ease-in duration-200 md:px-0 md:py-0 md:mt-0 md:hover:bg-opacity-0">
+					<span class="md:hover:text-lightBlue group-hover:text-darkBlue md:group-hover:text-lightBlue w-full h-full">Corporate</span>
+					<svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+				  </button>
+				  <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full md:max-w-[15rem] md:w-screen md:mt-6 mt-0 origin-top-right">
+					<div class="px-2 pt-2 pb-4 bg-darkBlue border border-white/40 rounded-md shadow-lg  ">
+					  <div class="flex flex-col  gap-4">
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue hover:bg-gray-200 " href="about-en.html">
+						  
+						  <div class="ml-3 w-full group">
+							<p class="text-sm group-hover:text-darkBlue">About US</p>
+						  </div>
+						</a>
+		
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2   hover:text-darkBlue  hover:bg-gray-200  " href="career-en.html">
+						  
+						  <div class="ml-3 w-full group">
+							<p class="text-sm group-hover:text-darkBlue">Career</p>
+						  </div>
+						</a>
+						
+					  </div>
+					</div>
+				  </div>
+				</div>  
+			  
+			  <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-darkBlue  hover:bg-gray-200  md:hover:text-lightBlue ease-in duration-200 md:px-0 md:py-0 md:mt-0 md:hover:bg-opacity-0 md:mt-[3px]" href="contact-en.html">Contact</a>
+			  <a class="px-4 pt-[.3rem] w-14" href="index.html"><img src="/img/tr-icon.png" alt=""></a>
+			   
+			</nav>
+		  </div>
+		</div>
+	  </div>
+	  </div>
+
+
+	  <!--MAIN SLIDER-->
+	<div class="pt-16">
+		<div id="carouselExampleSlidesOnly" class="carousel slide relative" data-bs-ride="carousel">
+			<div class="carousel-inner relative w-full overflow-hidden">
+
+			<div class="carousel-item active relative float-left w-full sm:mt-0 mt-7">
+				<a href="#"><div class="absolute max-w-xl-[1100px] lg:w-[70%] text-center md:w-2/3 md:left-[18%] md:rounded-3xl glass top-0 lg:left-[15%] md:h-60 h-70 flex flex-col items-center justify-center md:gap-4 w-[95%] sm-w[85%] sm:left-[3%] left-3 p-4 rounded-xl text-sm mt-[1rem]"></a>
+					<h1 class="md:text-2xl text-xl">MEMORY / STORAGE PRODUCTS</h1>
+					<p class="mb-2 md:text-[1rem]">“According to design and customer requirements, a wide range of Flash storage units with large capacity and scalability can be provided. We have storage products that can meet the needs of flash storage providing encrypted / unencrypted solutions. For enterprise-class storage applications, we are able to offer the industry's most advanced capacities (defense, consumer and aerospace) with high storage capacity SSD (solid state drives).”</p>
+				</div>
+				<img
+				src="/img/slider-2.jpg"
+				class="block w-full object-cover sm:h-96 h-[320px] sm:mt-32"
+				alt="Wild Landscape"
+				/>
+			</div>
+
+			<div class="carousel-item relative float-left w-full sm:mt-0 mt-7">
+				<a href="#"><div class="absolute max-w-xl-[1100px] lg:w-[50%] text-center md:w-2/3 md:left-[20%] md:rounded-3xl glass top-0 lg:left-[27%] md:h-60 h-60 flex flex-col items-center justify-center md:gap-4 w-[60%] sm:left-[21%] left-[19%] p-4 rounded-xl text-sm mt-[2.2rem]"></a>
+					<h1 class="md:text-2xl text-xl">PCB PRODUCTS</h1>
+					<p class="mb-2 md:text-[1rem]">We offer single-sided PCB, double-sided PCB, multi-layer PCB, aluminum-based PCB, rigid-flex PCB (flexible printed circuit boards), gold-plated PCB, OSP PCB, in-hole coated PCB solutions in line with your design needs.</p>
+				</div>
+				<img
+				src="/img/slider-1.jpg"
+				class="block w-full object-cover sm:h-96 h-[320px] sm:mt-32"
+				alt="Camera"
+				/>
+			</div>
+
+			<div class="carousel-item relative float-left w-full sm:mt-0 mt-7">
+				<a href="#"><div class="absolute max-w-xl-[1100px] lg:w-[50%] text-center md:w-2/3 md:left-[20%] md:rounded-3xl glass top-0 lg:left-[27%] md:h-60 h-60 flex flex-col items-center justify-center md:gap-4 w-[60%] sm:left-[21%] left-[19%] p-4 rounded-xl text-sm mt-[2.2rem]"></a>
+					<h1 class="md:text-2xl text-xl">POWER PRODUCTS</h1>
+					<p class="mb-2 md:text-[1rem]">We support you as your solution partner in providing Military and Industrial power solutions suitable for your designs.</p>
+				</div>
+				<img
+				src="img/slider-3.jpg"
+				class="block w-full object-cover sm:h-96 h-[320px] sm:mt-32"
+				alt="Exotic Fruits"
+				/>
+			</div>
+
+			<div class="carousel-item relative float-left w-full sm:mt-0 mt-7">
+				<a href="#"><div class="absolute max-w-xl-[1100px] lg:w-[50%] text-center md:w-2/3 md:left-[20%] md:rounded-3xl glass top-0 lg:left-[27%] md:h-60 h-70 flex flex-col items-center justify-center md:gap-4 w-[80%] sm:left-[21%] left-[11%] p-4 rounded-xl text-sm mt-8"></a>
+					<h1 class="md:text-2xl text-xl">SENSORS SOLUTIONS</h1>
+					<p class="mb-2 md:text-[1rem]">We can provide product support in MEMS, Fiber Optic or an infrastructure of your choice according to your project requirements. You can consult about sensors such as gyroscope, accelorometer, inclinometer, magnetometer suitable for your design. We host boxed, OEM style products to be used in the Industrial and Military fields. Please contact for details.</p>
+				</div>
+				<img
+				src="img/slider-4.jpg"
+				class="block w-full object-cover sm:h-96 h-[320px] sm:mt-32"
+				alt="Exotic Fruits"
+				/>
+			</div>
+			
+			</div>
+		</div>
+	</div>
+
+
+	  <!--ABOUT US-->
+	<div class="relative mx-auto container px-4">
+		<div class="absolute lg:-top-10 md:-top-12 sm:-top-6">
+			<div class="flex">
+				<div id="img" class="absolute z-10 " data-aos="fade-right">
+					<img src="/img/about-uss.jpg" alt="" class=" object-cover border border-whiteNot/80 mt-4 lg:h-92 md:h-[30rem] sm:h-[26rem] invisible sm:visible rounded-2xl shadow">
+				</div>
+				<div id="text" class="flex flex-col sm:pt-0 lg:w-[70%] md:w-[65%] md:pl-24 md:pt-8 sm:w-[45%] sm:text-sm sm:mt-8   sm:ml-auto md:gap-2 md:mt-2 lg:mt-4 sm:mr-3 mr-2rem" data-aos="fade-left">
+					<h1 class="border-b border-b-whiteNot/40 pb-2 mb:leading-6 lg:text-4xl md:text-3xl  sm:text-xl text-xl sm:mb-2 lg:mt-0 md:mt-4 sm:mt-0">About Us</h1>
+					<p class="lg:text-lg md:text-[16px] md:leading-5 sm:leading-4 sm:text-[13px] mb-10">Our team, which has accumulated its experience in the field of test measurement devices and defense industry since 2012, established Pentamek Defense in 2017 in order to serve the Turkish defense industry and electronics world. Pentamek continues to serve the industry in order to reduce the foreign dependency of our country, to find solutions to logistics and supply problems, and to lead in the field of engineering and design. We have made it our duty to meet the needs of the sector with our experience, supplier and customer relations in the field of defense industry. PENTAMEK, which closely follows the developing technology; has adopted a continuous development approach and customer-oriented work as a company culture.</p>
+				</div>
+			</div>
+		</div> 
+	</div>
+	
+	
+	
+	
+	<!--BRAND SLIDER-->
+	
+	<div id="brand" class="mb-6 // lg:mt-[27rem]  md:mt-[26.5rem]  sm:mt-[24rem] mt-[25rem]">
+		<div class="bg-blue mb-5 sm:h-14 h-10 flex items-center"><h1 class="container mx-auto sm:text-right text-center px-4 lg:text-3xl md:text-2xl // lg:py-4 sm:py-3 // lg:pr-8  md:pr-4 sm:pr-2 ">OUR PRODUCERS </h1></div>
+		<div id="bg-blue" class=" mx-auto container px-4">
+			<div class="swiper mySwiper">
+				<div class="swiper-wrapper">
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="https://www.evpudefence.com" target="_blank">
+						<div id="img">
+							<img src="/img/evpu.png" alt="Evpu" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">EVPU DEFENCE</h1>
+							<p class="px-2 text-center" >Fixed/Mobile monitoring systems, Pan/Titls,
+								Cameras, Software, Operator console, Uninstall
+								mechanism etc.</p>
+						</div>
+					</a>
+				</div>
+
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="http://www.novachips.com" target="_blank">
+						<div id="img">
+							<img src="/img/novachips.png" alt="Novachips" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">NOVACHIPS</h1>
+							<p class="px-2 text-center" > Novachips is a leading provider of a wide range of Flash storage processors and storage drives (SSD) with breakthrough capacity and scalability.</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/hwa.png" alt="HWA" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">HWA CREATE</h1>
+							<p class="px-2 text-center" >HWA offers satellite navigation focused products, including satellite navigation signal simulators, satellite navigation baseband chips and receivers, GNSS/INS integrated navigation products.</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/myir.png" alt="MYIR" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">MYIR TECH</h1>
+							<p class="px-2 text-center">Global provider of ARM hardware and software tools, design solutions for embedded applications.</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/sintersa.png" alt="Sintersa" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">SINTERSA</h1>
+							<p class="px-2 text-center" >It is a group of companies that designs manufacturing and supply components and sub-electrical/electronic interconnection systems under the QPL license for professional applications in harsh environments.</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/keylink.png" alt="Keylink Microwave" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-2xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">KEYLINK MICROWAVE</h1>
+							<p class="px-2 text-center" >Radar, jamming, communication system, RF and microwave power amplifier modules, components, assemblies and subsystems for test and measurement.</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/optokon.png" alt=Optokon" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">OPTOKON</h1>
+							<p class="px-2 text-center" >It is a leading global manufacturer and supplier of premium active and passive fiber optic components specializing in integrated data network, FTTx and tactical military solutions.</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/miot.png" alt="Miot Solutions" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">MIOT SOLUTIONS</h1>
+							<p class="px-2 text-center" >Antennas are Miot's specialty. Miot offers a TRP/TIS test. Provides services for RF performance evaluation of devices.</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="https://www.ramet.as/home" target="_blank">
+						<div id="img">
+							<img src="/img/ramet.png" alt="Ramet" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">RAMET</h1>
+							<p class="px-2 text-center" >RAMET is a company specializing in the development and manufacture of active and passive radar systems.</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/penlink.png" alt="Penlik" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">PENLINK</h1>
+							<p class="px-2 text-center" >Penlink AB serves as an independent supplier of electro-mechanical components and servo systems for the automation industry.</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/harting.png" alt="Harting" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">HARTING</h1>
+							<p class="px-2 text-center" >Harting develops and manufactures the world's most durable and reliable electrical connectors and solutions.</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/sunlike.png" alt="Sunlike Display" class="w-40 mx-auto">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-2xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">SUNLIKE DISPLAY</h1>
+							<p class="px-2 text-center" >Thanks to its 22 years of experience, SUNLIKE offers superior displays, reliable service and technical advice.</p>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass sm:h-[28rem] h-96 rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/mtmems.jpeg" alt="MT Microsystems" class="w-40 mx-auto my-12">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-2xl border-b mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">MT MYCROSYSTEMS</h1>
+							<p class="px-2 text-center" >MT Microsystems provides customers with a total MEMS product solution including design, fabrication, packaging, module integration and testing.</p>
+						</div>
+					</a>
+				</div>
+				
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--REFERANSES-->
+
+	<div id="ref" class="container mx-auto w-full my-10">
+		<h1 class="flex justify-center mx-auto text-md text-max-w-xl sm:text-2xl md:text-3xl border-b border-b-whiteNot/40 w-2/3 pb-2">Our Referennces and Business Partners</h1>
+		<div data-aos="fade-up id="logos" class=" grid lg:gap-4 md:gap-3 sm:gap-2 gap-4 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 lg:grid-rows-2 md:grid-rows-3 sm:grid-rows-4 grid-rows-6 mt-8 mx-8 sm:gap-y-8 gap-y-4 ">
+			<span class="glass rounded-xl px-2"> <img src="/img/aselsan.png" alt=""> </span>
+			<span class="glass rounded-xl px-2"> <img src="/img/roketsan.png" alt=""> </span>
+			<span class="glass rounded-xl px-2"> <img src="/img/havelsan.png" alt=""> </span>
+			<span class="glass rounded-xl px-2"> <img src="/img/tai.png" alt=""> </span>
+			<span class="glass rounded-xl px-2"> <img src="/img/sdt.png" alt=""> </span>
+			<span class="glass rounded-xl px-2"> <img src="/img/meteksan.png" alt=""> </span>
+			<span class="glass rounded-xl px-2"> <img src="/img/tubitak.png" alt=""> </span>
+			<span class="glass rounded-xl px-2"> <img src="/img/fnss.png" alt=""> </span>
+			<span class="glass rounded-xl px-2"> <img src="/img/tualcom.png" alt=""> </span>
+			<span class="glass rounded-xl px-2"> <img src="/img/mfk.png" alt=""> </span>
+			<span class="glass rounded-xl px-2"> <img src="/img/surec.png" alt=""> </span>
+			<span class="glass rounded-xl px-2"> <img src="/img/3en.png" alt=""> </span>
+		</div>
+	</div>
+
+
+	<!--FOOTER-->
+
+	<div id="footer" class="pb-6 pt-3 glass ">
+		<div class="container mx-auto px-4 sm:flex  sm:items-center sm:justify-between grid grid-gap-4 grid-cols-3 place-content-center ">
+			<div id="logo">
+				<a href="index.html"><img src="/img/logo-m.png" alt="" class="sm:w-40 w-[14rem]"></a>
+			</div>
+			<div id="link" class="ml-auto">
+				<ul class="sm:flex sm:items-center sm:gap-3 " >
+					<li class="text-center sm:text-base text-md pb-2"><a href="english.html" class="px-2 py-1 hover:text-lightBlue ease-in duration-200">Home</a></li>
+					<li class="text-center sm:text-base text-md pb-2"><a href="about-en.html" class="px-2 py-1 hover:text-lightBlue ease-in duration-200">About Us</a></li>
+					<li class="text-center sm:text-base text-md pb-2"><a href="career-en.html" class="px-2 py-1 hover:text-lightBlue ease-in duration-200">Career</a></li>
+					<li class="text-center sm:text-base text-md pb-2"><a href="contact-en.html" class="px-2 py-1 hover:text-lightBlue ease-in duration-200">Contact</a></li>
+				</ul>
+			</div>
+			<div id="linkedin " class="ml-auto">
+				<a href="https://www.linkedin.com/company/pentamek-savunma/" target="_blank" class="flex items-center cursor-pointer">
+				<i class="fa-brands fa-linkedin text-lightBlue sm:text-2xl text-xl sm:mr-4 mr-2"></i>
+				<span class="hover:text-lightBlue ease-in duration-200 sm:text-base text-md">Linkedin</span>
+				</a>
+			</div>
+		</div>
+		<div class="text-whiteNot flex justify-center mt-4 sm:text-base text-sm">&copy; Copyright 2017 | PENTAMEK | created by <a href="https://www.behance.net/bariskir" target="_blank" class="pl-1"><i class='fa-brands fa-square-behance text-lightBlue'><span>/bariskir</span></i> </a></div>
+	</div>
+
+
+
+
+
+	
+	
+	
+	
+
+	<script src="/script.js"></script>
+	<!--TW ELEMENTS-->
+	<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+	<!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+	<!--AOS-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script>
+		document.getElementById("cookie-banner-accept").addEventListener("click", function(){
+		document.getElementById("cookie-banner").style.display = "none";
+		// Set a cookie to remember that the user has accepted the cookie banner
+		document.cookie = "cookieBannerAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+	});
+	</script>
+	<script>
+		AOS.init({
+			delay: 200,
+			duration: 1200,
+			once: false
+		})
+	</script>
+	<script>
+		const openPopupButton = document.querySelector('#openPopup');
+		const closePopupButton = document.querySelector('#closePopup');
+		const popupOverlay = document.querySelector('.popup-overlay');
+
+		openPopupButton.addEventListener('click', function() {
+		popupOverlay.style.display = 'block';
+		});
+
+		closePopupButton.addEventListener('click', function() {
+		popupOverlay.style.display = 'none';
+		});
+
+	</script>
+
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 4,
+        spaceBetween: 40,
+		autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+
+		breakpoints:{
+			0: {
+				slidesPerView: 1,
+			},
+
+			768: {
+				slidesPerView: 2,
+			},
+			
+			1080: {
+				slidesPerView: 3,
+			},
+
+			1281: {
+				slidesPerView: 4,
+			},
+			
+		},
+		
+		
+      });
+    </script>
+
+	
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Pentamek</title>
+	<link rel="shortcut icon" href="/img/icon-mini.png">
+
+	<!--TW-Elements-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+	<!--SwiperJS-->
+	<link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
+	
+	<!--AOS-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!--Tailwind-->
+	<script src="https://cdn.tailwindcss.com"></script>
+
+		<!--res-dropdown-->
+		<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+	
+	
+	<script>
+		tailwind.config = {
+		  theme: {
+			
+			
+			fontFamily: {
+      			body: ['Open Sans', 'sans-serif'],
+      			header: ['Cairo', 'sans-serif'],
+    },
+			extend: {
+			  colors: {
+				darkBlue: 'hsl(240, 23%, 11%)',
+				midBlue: 'hsl(204, 100%, 36%)',
+				lightBlue: 'hsl(195, 90%, 61%)',
+				whiteNot: 'hsl(0, 0%, 95%)',
+			  },
+			  spacing: {
+				'xs': '35rem',
+			},
+			}
+		  }
+		}
+	  </script>
+
+	<style type="text/tailwindcss">
+		@layer utilities {
+		
+
+		.glass{
+		background: linear-gradient(121.37deg, rgba(175, 173, 173, 0.2) 4.47%, rgba(0, 0, 0, 0.1) 93.87%);
+		backdrop-filter: blur(5px);
+		border-top: .15rem solid rgba(255, 255, 255, 0.2);
+		border-left: .15rem solid rgba(255, 255, 255, 0.2);
+		border-right: .15rem solid rgba(255, 255, 255, 0.2);
+		border-bottom: .15rem solid rgba(255, 255, 255, 0.2);   
+		}
+
+		.nav-glass{
+		background: linear-gradient(121.37deg, rgba(255, 255, 255, 0.3) 4.47%, rgba(255, 255, 255, 0.2) 93.87%);
+		backdrop-filter: blur(50px);
+		border-bottom: .15rem solid rgba(255, 255, 255, 0.2);
+		}
+
+		.bg-blue{
+			background: linear-gradient(121.37deg, #44C8F5 4.47%, rgba(0, 110, 183, 0.8) 93.87%);
+			backdrop-filter: blur(3px);
+		}
+
+
+		@layer base{
+			h1, h2{
+				color: #F1F1F1;
+				font-family: 'Cairo', sans-serif;
+			}
+
+			a, p, span, button{
+				color: #F1F1F1;
+				font-family: 'Open Sans', sans-serif;
+			}
+
+			
+		}
+	}
+	</style>
+
+	<!--Custom Font Family-->
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!--Fontawesome ICONS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+	
+</head>
+<body class="bg-darkBlue"></body>
+
+	
+	 <!-- Navbar -->
+	 <div class="h-[4rem] z-40 absolute left-0 top-0 w-full nav-glass">
+		<div class="antialiased h-[4rem] pt-3">
+		<div class="w-full text-white">
+		  <div x-data="{ open: false }" class="flex flex-col max-w-screen-2xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
+			<div class="flex flex-row items-center justify-between">
+			  <a href="index.html" class="absolute w-36 top-0 text-lg font-semibold tracking-widest  uppercase rounded-lg  focus:outline-none focus:shadow-outline"><img src="img/logo.jpg" alt="" class="w-full rounded-b-2xl" /></a>
+			  <button class="ml-auto rounded-lg md:hidden focus:outline-none focus:shadow-outline mt-2" @click="open = !open">
+				<svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+				  <path x-show="!open" fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+				  <path x-show="open" fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+				</svg>
+			  </button>
+			</div>
+
+			<!--ICON-->
+			<a
+			href="index.html"
+			class="hidden w-[65px] pt-2  lg:block absolute top-5 left-[48.5%]"
+			><img src="/img/icon.png" alt="">
+			</a> 
+
+			<!--NAV-MENU-->
+			<nav :class="{'flex': open, 'hidden': !open}" class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row md:mt-1 mt-10 md:bg-opacity-0 md:border-none bg-darkBlue border border-white/40 rounded-lg">
+			  <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-darkBlue  hover:bg-gray-200  md:hover:text-lightBlue ease-in duration-200 md:px-0 md:py-0 md:mt-0 md:hover:bg-opacity-0 md:mt-[3px]" href="index.html">Anasayfa</a>
+	  
+			  <div @click.away="open = false" class="relative" x-data="{ open: false }">
+				  <button @click="open = !open" class="group flex flex-row text-white items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg  md:w-auto md:inline md:mt-0 md:ml-4 hover:text-darkBlue hover:bg-gray-200 md:hover:text-lightBlue ease-in duration-200 md:px-0 md:py-0 md:mt-0 md:hover:bg-opacity-0">
+					<span class="md:hover:text-lightBlue group-hover:text-darkBlue md:group-hover:text-lightBlue w-full h-full">Ürünler</span>
+					<svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+				  </button>
+				  <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute z-10 right-0 w-full md:max-w-[28rem] md:w-screen md:mt-6 mt-0 origin-top-right">
+					<div class="px-2 pt-2 pb-4 bg-darkBlue border border-white/40 rounded-md shadow-lg">
+					  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="5g-iletisim.html">
+						  
+						  <div class="ml-3 w-full">
+						   
+							<p class="text-sm group-hover:text-darkBlue">5G ve Fiber Teknoloji</p>
+						  </div>
+						</a>
+		
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="depolama.html">
+						  
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Depolama Birimleri</p>
+						  </div>
+						</a>
+		
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="ekrancozumleri.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Ekran Çözümleri</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="elektromekanik.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Elektromekanik</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="gomulu-pc.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Gömülü Bilgisayar Çözümleri</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="konnektor.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Konnektörler</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="pcb.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">PCB</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="rf-micro.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">RF & Microwave</p>
+						  </div>
+						</a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="sensors.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue">Sensörler</p>
+						  </div>
+						</a>
+
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="guc.html">
+							<div class="ml-3 w-full">
+							  <p class="text-sm group-hover:text-darkBlue ">Güç Ürünleri ve Komponent</p>
+							</div>
+						  </a>
+	  
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue  hover:bg-gray-200 " href="design.html">
+						  <div class="ml-3 w-full">
+							<p class="text-sm group-hover:text-darkBlue ">Tasarım ve Mühendislik</p>
+						  </div>
+						</a>
+						
+					  </div>
+					</div>
+				  </div>
+			  </div>  
+			  
+			  <div @click.away="open = false" class="relative" x-data="{ open: false }">
+				  <button @click="open = !open" class="group flex flex-row text-white items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg  md:w-auto md:inline md:mt-0 md:ml-4 hover:text-darkBlue hover:bg-gray-200 md:hover:text-lightBlue ease-in duration-200 md:px-0 md:py-0 md:mt-0 md:hover:bg-opacity-0">
+					<span class="md:hover:text-lightBlue group-hover:text-darkBlue md:group-hover:text-lightBlue w-full h-full">Kurumsal</span>
+					<svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+				  </button>
+				  <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full md:max-w-[15rem] md:w-screen md:mt-6 mt-0 origin-top-right">
+					<div class="px-2 pt-2 pb-4 bg-darkBlue border border-white/40 rounded-md shadow-lg  ">
+					  <div class="flex flex-col  gap-4">
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2  hover:text-darkBlue hover:bg-gray-200 " href="about-tr.html">
+						  
+						  <div class="ml-3 w-full group">
+							<p class="text-sm group-hover:text-darkBlue">Hakkımızda</p>
+						  </div>
+						</a>
+		
+						<a class="group flex flex row items-start rounded-lg bg-transparent p-2   hover:text-darkBlue  hover:bg-gray-200  " href="career-tr.html">
+						  
+						  <div class="ml-3 w-full group">
+							<p class="text-sm group-hover:text-darkBlue">Kariyer</p>
+						  </div>
+						</a>
+						
+					  </div>
+					</div>
+				  </div>
+				</div>  
+			  
+			  <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg  md:mt-0 md:ml-4 hover:text-darkBlue  hover:bg-gray-200  md:hover:text-lightBlue ease-in duration-200 md:px-0 md:py-0 md:mt-0 md:hover:bg-opacity-0 md:mt-[3px]" href="contact-tr.html">İletişim</a>
+			  <a class="px-4 pt-[.06rem] w-14" href="english.html"><img src="/img/eng-icon.png" alt=""></a>
+			   
+			</nav>
+		  </div>
+		</div>
+	  </div>
+	  </div>
+
+
+	  <!--Product Detail-->
+
+	  <div id="text" class="pt-24 container px-4 text-center mx-auto">
+		<h1 class="border-b border-b-whiteNot/40 pb-2 mb-4 mt-4 lg:text-4xl md:text-3xl  text-2xl sm:mb-4 lg:mt-0 md:mt-14">Güç Ürünleri ve Komponent</h1>
+		<p class="lg:text-lg md:text-[17px] md:leading-7 sm:leading-6 text-[14px ]">
+
+		</p>
+	</div>
+
+	<div id="text" class="sm:mb-16 mb-8 container px-4 text-center mx-auto" data-aos="fade-down">
+		<img src="/img/angsemi.png" alt="Sintersa" class=" lg:w-52 md:w-44 sm:w-30 w-36 mx-auto">
+		<p class="border-t border-t-whiteNot/40 pt-4 lg:text-lg md:text-[17px] md:leading-7 sm:leading-6 text-[14px ]">ANGSEMI Mikroelektronik A.Ş., modern topluma dört merkezi meydan okumaya yönelik yarı iletken ürünler ve uygulama sistemleri çözümleri sunar: Manyetik sensörler, akıllı terminaller ve akıllı giyilebilir cihazlar, akıllı ev ve akıllı aydınlatma, akıllı gözetim ve güvenlik sistemi.</p>
+	</div>
+
+	<!--BRAND SLIDER-->
+	
+	<div id="brand" class="mb-6 // ">
+		<div id="bg-blue" class=" mx-auto container px-4">
+
+			<div class="swiper mySwiper">
+				<div class="swiper-wrapper">
+				<div class="swiper-slide glass h-[19rem] rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/ang-1.png" alt="" class="w-[90%] shador rounded border border-whiteNot/40 mx-auto my-4">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200 text-xl">Analog Switches</h1>
+							<!-- <p class="px-2 text-center" >Sabit/Mobil izleme sistemleri, Pan/Titls,
+								Kameralar, Yazılım, Operatör konsolu, Kaldırma
+								mekanizma vb.</p> -->
+						</div>
+					</a>
+				</div>
+
+
+				<div class="swiper-slide glass h-[19rem] rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/ang-2.png" alt="" class="w-[90%] shador rounded border border-whiteNot/40 mx-auto my-4">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200 text-xl">Magnetic Sensors</h1>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass h-[19rem] rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/ang-3.png" alt="" class="w-[90%] shador rounded border border-whiteNot/40 mx-auto my-4">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200 text-xl">SAR Sensors
+							</h1>
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass h-[19rem] rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/ang-4.png" alt="" class="w-[90%] shador rounded border border-whiteNot/40 mx-auto my-4">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-3xl mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200 text-xl">LDO</h1>
+						</div>
+					</a>
+				</div>
+
+				
+				
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+	 <!--Product Detail-->
+
+	<div id="text" class="sm:mb-16 mb-8 container px-4 text-center mx-auto" data-aos="fade-down">
+		<img src="/img/axelite.png" alt="Sintersa" class=" lg:w-52 md:w-44 sm:w-30 w-36 mx-auto">
+		<p class="border-t border-t-whiteNot/40 pt-4 lg:text-lg md:text-[17px] md:leading-7 sm:leading-6 text-[14px ]">CMOS ve Bi-polar üzerindeki tüm seviyelerde entegrasyon yoluyla yenilikçi ürünler tasarlarken profesyonel yetkinliği. Bu, şirketin müşterilerine sadece bileşeni değil, aynı zamanda komple sistemi de sunmasını sağlar.</p>
+	</div>
+
+	<!--BRAND SLIDER-->
+	
+	<div id="brand" class="mb-6 // ">
+		<div id="bg-blue" class=" mx-auto container px-4">
+
+			<div class="swiper mySwiper">
+				<div class="swiper-wrapper">
+				<div class="swiper-slide glass h-[19rem] rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/ax-1.png" alt="" class="w-[90%] shador rounded border border-whiteNot/40 mx-auto my-4">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-xl mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">Load Switches</h1>
+							
+						</div>
+					</a>
+				</div>
+
+
+				<div class="swiper-slide glass h-[19rem] rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/ax-2.png" alt="" class="w-[90%] shador rounded border border-whiteNot/40 mx-auto my-4">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-xl mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">Reset IC</h1>
+							
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass h-[19rem] rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/ax-3.png" alt="" class="w-[90%] shador rounded border border-whiteNot/40 mx-auto my-4">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-xl mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">Shunt Regulator</h1>
+							
+						</div>
+					</a>
+				</div>
+
+				<div class="swiper-slide glass h-[19rem] rounded-2xl">
+					<a href="#">
+						<div id="img">
+							<img src="/img/ax-4.png" alt="" class="w-[90%] shador rounded border border-whiteNot/40 mx-auto my-4">
+						</div>
+						<div id="text" class="">
+							<h1 class="text-center mb-6 text-xl mx-8 pb-1 hover:text-lightBlue hover:border-lightBlue ease-in duration-200">Hall Sensors</h1>
+							
+
+
+
+
+
+							</p>
+						</div>
+					</a>
+				</div>
+				
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	
+	
+	
+	
+	
+	
+	
+	<!--FOOTER-->
+
+	<div id="footer" class="pb-6 pt-3 glass ">
+		<div class="container mx-auto px-4 sm:flex  sm:items-center sm:justify-between grid grid-gap-4 grid-cols-3 place-content-center ">
+			<div id="logo">
+				<a href="index.html"><img src="/img/logo-m.png" alt="" class="sm:w-40 w-[14rem]"></a>
+			</div>
+			<div id="link" class="ml-auto">
+				<ul class="sm:flex sm:items-center sm:gap-3 " >
+					<li class="text-center sm:text-base text-md pb-2"><a href="index.html" class="px-2 py-1 hover:text-lightBlue ease-in duration-200">Anasayfa</a></li>
+					<li class="text-center sm:text-base text-md pb-2"><a href="about-tr.html" class="px-2 py-1 hover:text-lightBlue ease-in duration-200">Hakkımızda</a></li>
+					<li class="text-center sm:text-base text-md pb-2"><a href="career-tr.html" class="px-2 py-1 hover:text-lightBlue ease-in duration-200">Kariyer</a></li>
+					<li class="text-center sm:text-base text-md pb-2"><a href="contact-tr.html" class="px-2 py-1 hover:text-lightBlue ease-in duration-200">İletişim</a></li>
+				</ul>
+			</div>
+			<div id="linkedin " class="ml-auto">
+				<a href="https://www.linkedin.com/company/pentamek-savunma/" target="_blank" class="flex items-center cursor-pointer">
+				<i class="fa-brands fa-linkedin text-lightBlue sm:text-2xl text-xl sm:mr-4 mr-2"></i>
+				<span class="hover:text-lightBlue ease-in duration-200 sm:text-base text-md">Linkedin</span>
+				</a>
+			</div>
+		</div>
+		<div class="text-whiteNot flex justify-center mt-4 sm:text-base text-sm">&copy; Copyright 2017 | PENTAMEK | created by <a href="https://www.behance.net/bariskir" target="_blank" class="pl-1"><i class='fa-brands fa-square-behance text-lightBlue'><span>/bariskir</span></i> </a></div>
+	</div>
+
+
+
+<script src="/script.js"></script>
+<!--TW ELEMENTS-->
+<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+	
+<!--AOS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+	AOS.init({
+		delay: 200,
+		duration: 1200,
+		once: false
+	})
+</script>
+
+ <!-- Initialize Swiper -->
+ <script>
+	var swiper = new Swiper(".mySwiper", {
+	  slidesPerView: 4,
+	  spaceBetween: 40,
+	  autoplay: {
+		delay: 2500,
+		disableOnInteraction: false,
+	  },
+	  pagination: {
+		el: ".swiper-pagination",
+		clickable: true,
+	  },
+
+	  breakpoints:{
+		  0: {
+			  slidesPerView: 1,
+		  },
+
+		  768: {
+			  slidesPerView: 2,
+		  },
+		  
+		  1080: {
+			  slidesPerView: 3,
+		  },
+
+		  1281: {
+			  slidesPerView: 4,
+		  },
+		  
+	  },
+	  
+	  
+	});
+  </script>
+
+</body>
+</html>
